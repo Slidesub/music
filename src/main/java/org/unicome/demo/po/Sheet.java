@@ -26,13 +26,13 @@ public class Sheet extends BaseEntity {
     private String src;
     
     @Column(name = "count")
-    private String count;
+    private Integer count;
 
-    public String getCount() {
+    public Integer getCount() {
 		return count;
 	}
 
-	public void setCount(String count) {
+	public void setCount(Integer count) {
 		this.count = count;
 	}
 

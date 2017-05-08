@@ -363,6 +363,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
                         "<div class='btn btn-default' data-ng-click='creatSheet()'>新建歌单</div>" +
                     "</div>" +
                 "</div>" +
+                "<div class='row' style='color: white;'>" +
+                "<div class='col-md-1'>" +
+                    "<div data-ng-model='msg'></div>" +
+                "</div>" +
+                "</div>" +
                 "<div class='row' style='color: white; margin-top: 10px;'>" +
                     "<div class='col-md-1'>歌单</div>" +
                 "</div>" +
@@ -384,15 +389,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 "<div ng-show='dialog' class='panel panel-default' style='color: black; z-index: 100; position: fixed; top: 60%; left: 50%; transform: translateX(-50%) translateY(-50%);'>" +
                 "<div class='panel-heading text-center'>新建歌单</div>" +
                     "<div class='panel-body'>" +
-                    	"<div><input type='text' placeholder='名称' data-ng-model='name'></input></div>" +
-                    	"<div style='margin-top: 10px;'><input type='text' placeholder='描述' data-ng-model='name'></input></div>" +
-//                    	"<input type='file'></input>" +
-                    	"<div style='margin-top: 10px;'><input type='submit'></input></div>" +
+                        "<form name='createForm' data-ng-submit='submit()'>" +
+                            "<div><input type='text' placeholder='名称' data-ng-model='name' name='name'></input></div>" +
+                            "<div style='margin-top: 10px;'><input type='text' placeholder='描述' name='desc' data-ng-model='desc'></input></div>" +
+//                          "<input type='file'></input>" +
+                            "<div style='margin-top: 10px;'><input type='submit'></input></div>" +
+                        "</form> " +
                     "</div>" +
 				"</div>" +
             "</div>" +
             "<pagenation page='{{pageCount}}'></pagenation>",
-        controller: ["$scope", "$state", "loadSheet", "loadDataService", function($scope, $state, loadSheet, loadDataService) {
+        controller: ["$scope", "$state", "$http", "loadSheet", "loadDataService", function($scope, $state, $http, loadSheet, loadDataService) {
         	if (!localStorage.user) {
         		$state.go("app.music.login");
         	} else {
@@ -416,6 +423,23 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 $scope.dialog = false;
                 $scope.creatSheet = function() {
                 	$scope.dialog = !$scope.dialog
+                }
+                $scope.submit = function() {
+                	var formData = {
+                        name: $scope.createForm.name.$modelValue,
+                        desc: $scope.createForm.desc.$modelValue,
+                        userId: angular.fromJson(localStorage.user).id 
+                    }
+                    $http.post("music/createSheet", formData).then(function(response) {
+                        if (response.data.errCode == '1') {
+                            $scope.dialog = false;
+                            $scope.sheets.push(response.data.errBody);
+                        } else {
+                            $scope.msg = '*' + response.data.errMsg;
+                        }
+                    }, function(response) {
+                        $scope.msg = '*注册失败, 请重新注册';
+                    });
                 }
         	}
         }],

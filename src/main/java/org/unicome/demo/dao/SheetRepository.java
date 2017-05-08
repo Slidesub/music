@@ -17,4 +17,8 @@ public interface SheetRepository extends CrudRepository<Sheet, Integer>{
 
     @Query("SELECT count(s) from Sheet s where s.expiredDate is null and s.user = ?")
     int getCountByUser(User user);
+
+    @Query("SELECT s from Sheet s where s.expiredDate is null and s.user = ? and name = ?")
+    List<Sheet> findByUserIdAndName(User User, String name);
+
 }
