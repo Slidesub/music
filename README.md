@@ -44,7 +44,14 @@
 * 添加远程仓库地址
 > git remote add origin xxx
 
-* 推送
+* 首次推送
 > git push -u origin master
+
+* 提交, 推送修改的问件
+> git add 文件名
+
+> git commit -m ""
+
+> git push origin master
 
 ------
