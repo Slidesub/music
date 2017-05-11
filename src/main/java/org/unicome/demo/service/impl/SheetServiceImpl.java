@@ -51,7 +51,7 @@ public class SheetServiceImpl implements SheetService{
 		String name = map.get("name").toString().trim();
 		User user = userRepo.findOne(Integer.parseInt(userId));
 		List<Sheet> sheets = sheetRepo.findByUserIdAndName(user, name);
-		if (null != sheets || sheets.size() != 0) {
+		if (null != sheets && sheets.size() != 0) {
 			throw new ValidateException();
 		} else {
 			Sheet sheet = new Sheet();

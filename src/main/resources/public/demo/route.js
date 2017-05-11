@@ -158,12 +158,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 "<div data-ui-view=''></div>" +
             "</div>",
         controller: function($state, $location) {
-        	if (localStorage.user) {
-        	    $state.go("app.music.recommend");
-        	    //$state.go("app.music.recommend.userMusic");
-        	} else {
-        		$state.go("app.music.login");
-        	}
+            if (localStorage.user) {
+                $state.go("app.music.recommend");
+                //$state.go("app.music.recommend.userMusic");
+            } else {
+                $state.go("app.music.login");
+            }
         }
     };
 
@@ -225,7 +225,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             "</div>",
         controller: ['$scope', '$state', 'loadUserMusic', function($scope, $state, loadUserMusic) {
             if (localStorage.user) {
-            	$scope.sheetCount = 0;
+                $scope.sheetCount = 0;
                 $scope.userMusics = loadUserMusic[0];
                 $scope.musicCount = loadUserMusic[1].count;
                 $scope.pageCount = loadUserMusic[1].pageCount;
@@ -237,54 +237,54 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 $state.go("app.music.login");
             }
         }],
-	    resolve: {
-	        loadUserMusic: ["loadDataService", "pageSize", function(loadDataService, pageSize) {
-	            var page = {
-		                currentPage: 1,
-		                pageSize: pageSize,
-		                userId: angular.fromJson(localStorage.user).id
-		            }
-		            return loadDataService.getData("music/listUserMusic", page).then(function(result) {
-		                return result;
-		            });
-		        }],
-//	        loadUserSheet: ["loadDataService", "pageSize", function(loadDataService, pageSize) {
-//	            var page = {
-//		                currentPage: 1,
-//		                pageSize: pageSize,
-//		                userId: angular.fromJson(localStorage.user).id
-//		            }
-//		            return loadDataService.getData("music/listUserSheet", page).then(function(result) {
-//		                return result;
-//		            });
-//		        }],
-	    }
+        resolve: {
+            loadUserMusic: ["loadDataService", "pageSize", function(loadDataService, pageSize) {
+                var page = {
+                        currentPage: 1,
+                        pageSize: pageSize,
+                        userId: angular.fromJson(localStorage.user).id
+                    }
+                    return loadDataService.getData("music/listUserMusic", page).then(function(result) {
+                        return result;
+                    });
+                }],
+//            loadUserSheet: ["loadDataService", "pageSize", function(loadDataService, pageSize) {
+//                var page = {
+//                        currentPage: 1,
+//                        pageSize: pageSize,
+//                        userId: angular.fromJson(localStorage.user).id
+//                    }
+//                    return loadDataService.getData("music/listUserSheet", page).then(function(result) {
+//                        return result;
+//                    });
+//                }],
+        }
     };
 
     var userMusicState = {
-    	name: "app.music.recommend.userMusic",
-    	url: "/userMusic",
-    	template:
-    		"<div style='color: white;'>" +
-	    		"<div class='row' style='margin-top: 20px;'>" +
-	    			"<div class='col-md-12'>播放全部</div>" +
-	    		"</div>" +
-	    		"<div class='row' style='margin-top: 50px;'>" +
-	                "<div class='col-md-12'>" +
-	                    "<div>" +
-	                        "<li data-ng-repeat='userMusic in userMusics' style='display: flex; justify-content: flex-start;'>" +
-	                            "<span>" +
-	                                "<img id='playpause{{userMusic.id}}' data-ng-src='music/play.png' data-ng-click='open(userMusic.id)'></img>" +
-	                                "<audio id='aud{{userMusic.id}}' class='media-object'>" +
+        name: "app.music.recommend.userMusic",
+        url: "/userMusic",
+        template:
+            "<div style='color: white;'>" +
+                "<div class='row' style='margin-top: 20px;'>" +
+                    "<div class='col-md-12'>播放全部</div>" +
+                "</div>" +
+                "<div class='row' style='margin-top: 50px;'>" +
+                    "<div class='col-md-12'>" +
+                        "<div>" +
+                            "<li data-ng-repeat='userMusic in userMusics' style='display: flex; justify-content: flex-start;'>" +
+                                "<span>" +
+                                    "<img id='playpause{{userMusic.id}}' data-ng-src='music/play.png' data-ng-click='open(userMusic.id)'></img>" +
+                                    "<audio id='aud{{userMusic.id}}' class='media-object'>" +
                                         "<source data-ng-src='{{userMusic.music.src}}' type='audio/mp3' />" +
                                     "</audio>" +
-	                                "<span style='margin-left: 30px;'>{{userMusic.music.name}}</span>" +
-	                            "</span>" +
-	                            "<span style='margin-left: 150px;'>{{userMusic.music.singer}}</span>" +
-	                            "<span style='margin-left: 150px;'>{{userMusic.music.time}}</span>" +
-	                        "</li>" +
-	                    "</div>" +
-	                "</div>" +
+                                    "<span style='margin-left: 30px;'>{{userMusic.music.name}}</span>" +
+                                "</span>" +
+                                "<span style='margin-left: 150px;'>{{userMusic.music.singer}}</span>" +
+                                "<span style='margin-left: 150px;'>{{userMusic.music.time}}</span>" +
+                            "</li>" +
+                        "</div>" +
+                    "</div>" +
                 "</div>" +
             "</div>" +
             "<pagenation page='{{pageCount}}'></pagenation>",
@@ -325,14 +325,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
     };
 
     var userSheetState = {
-        	name: "app.music.recommend.sheets",
-        	url: "/sheets",
-        	template:
-        		"<div style='color: white;'>" +
-    	    		"<div class='row'>" +
-    	    			"<div>播放全部</div>" +
-    	    		"</div>" +
-    	    		"<div class='row'>" +
+            name: "app.music.recommend.sheets",
+            url: "/sheets",
+            template:
+                "<div style='color: white;'>" +
+                    "<div class='row'>" +
+                        "<div>播放全部</div>" +
+                    "</div>" +
+                    "<div class='row'>" +
                     "<div class='col-md-12'>" +
                         "<ul>" +
                             "<li data-ng-repeat='sheet in userSheets' style='display: flex; justify-content: space-around;'>" +
@@ -346,10 +346,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
                         "</ul>" +
                     "</div>" +
                 "</div>" +
-        		"</div>",
-        	controller: function() {
-        		
-        	}
+                "</div>",
+            controller: function() {
+                
+            }
         };
 
     // '我创建的歌单'
@@ -396,14 +396,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
                             "<div style='margin-top: 10px;'><input type='submit'></input></div>" +
                         "</form> " +
                     "</div>" +
-				"</div>" +
+                "</div>" +
             "</div>" +
             "<pagenation page='{{pageCount}}'></pagenation>",
         controller: ["$scope", "$state", "$http", "loadSheet", "loadDataService", function($scope, $state, $http, loadSheet, loadDataService) {
-        	if (!localStorage.user) {
-        		$state.go("app.music.login");
-        	} else {
-        		$scope.sheets = loadSheet[0];
+            if (!localStorage.user) {
+                $state.go("app.music.login");
+            } else {
+                $scope.sheets = loadSheet[0];
                 $scope.pageCount = loadSheet[1].pageCount;
                 $scope.currentPage = loadSheet[1].currentPage;
                 $scope.pageSize = loadSheet[1].pageSize;
@@ -411,7 +411,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 $scope.selectPage = function(page) {
                     page.userId = angular.fromJson(localStorage.user).id;
                     loadDataService.getData("music/loadSheet", page).then(function(response) {
-                        $scope.userMusics = response[0];
+                        $scope.sheets = response[0];
                         $scope.pageCount = response[1].pageCount;
                         $scope.currentPage = response[1].currentPage;
                         $scope.pageSize = response[1].pageSize;
@@ -422,10 +422,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
                 $scope.dialog = false;
                 $scope.creatSheet = function() {
-                	$scope.dialog = !$scope.dialog
+                    $scope.dialog = !$scope.dialog
                 }
                 $scope.submit = function() {
-                	var formData = {
+                    var formData = {
                         name: $scope.createForm.name.$modelValue,
                         desc: $scope.createForm.desc.$modelValue,
                         userId: angular.fromJson(localStorage.user).id 
@@ -441,63 +441,111 @@ app.config(function($stateProvider, $urlRouterProvider) {
                         $scope.msg = '*注册失败, 请重新注册';
                     });
                 }
-        	}
+            }
         }],
         resolve: {
-        	loadSheet : ["loadDataService", "pageSize", function(loadDataService, pageSize) {
-        		if (localStorage.user) {
-        			var page = {
+            loadSheet : ["loadDataService", "pageSize", function(loadDataService, pageSize) {
+                if (localStorage.user) {
+                    var page = {
                         currentPage: 1,
                         pageSize: pageSize,
                         userId: angular.fromJson(localStorage.user).id
                     }
-        			return loadDataService.getData("music/loadSheet", page).then(function(result) {
+                    return loadDataService.getData("music/loadSheet", page).then(function(result) {
                         return result;
                     });
-        		}
-        	}]
+                }
+            }]
         }
     };
     
     var sheetMusicState = {
-    	    name: "app.music.sheetMusic",
-    	    url: "/sheetMusic/:id",
-    	    template:
-    	        "<div style='color: white;'>" +
-    	            "<div style='margin-top: 20px' class='row'>" +
-    	                "<div class='col-md-2'>img</div>" +
-    	                "<div class='col-md-10'>" +
-    	                    "<div>名称</div>" +
-    	                    "<div>创建人</div>" +
-    	                    "<div>收藏</div>" +
-    	                "</div>" +
-    	            "</div>" +
-    	            "<div class='row'>" +
-    	                "<div class='col-md-2'>歌曲 10</div>" +
-    	            "</div>" +
-    	            "<div class='row'>" +
-    	                "<div class='col-md-1'>图片</div>" +
-    	                "<div class='col-md-2'>歌曲名称</div>" +
-    	                "<div class='col-md-2'>歌手</div>" +
-    	                "<div class='col-md-2'>时长</div>" +
-    	            "</div>" +
-    	        "</div>",
-    	    controller: ['$scope', '$state', '$stateParams', function($scope, $state, $stateParams) {
-    	        console.info($stateParams.id);
-    	    }],
-    	    resolve: {
-    	        loadSheetMusic : ['$stateParams', "loadDataService", "pageSize", function($stateParams, loadDataService, pageSize) {
-    	            var page = {
-    	                currentPage: 1,
-    	                pageSize: pageSize,
-    	                userId: $stateParams.id
-    	            }
-    	            return loadDataService.getData("music/loadSheetMusic", page).then(function(result) {
-    	                return result;
-    	            });
-    	        }]
-    	    }
-    	};
+            name: "app.music.sheetMusic",
+            url: "/sheetMusic/:id",
+            template:
+                "<div style='color: white;'>" +
+                    "<div style='margin-top: 20px' class='row'>" +
+                        "<div class='col-md-2'>img</div>" +
+                        "<div class='col-md-10'>" +
+                            "<div>名称</div>" +
+                            "<div>创建人</div>" +
+                            "<div>收藏</div>" +
+                        "</div>" +
+                    "</div>" +
+                    "<div class='row'>" +
+                        "<div class='col-md-2'>歌曲 10</div>" +
+                    "</div>" +
+                    "<div class='row'>" +
+                        "<div class='col-md-1'>图片</div>" +
+                        "<div class='col-md-2'>歌曲名称</div>" +
+                        "<div class='col-md-2'>歌手</div>" +
+                        "<div class='col-md-2'>时长</div>" +
+                    "</div>" +
+                    "<div class='row'>" +
+	                    "<div class='col-md-12'>" +
+		                    "<div>" +
+		                        "<li data-ng-repeat='sheetMusic in sheetMusics' style='display: flex; justify-content: flex-start;'>" +
+		                            "<span>" +
+		                                "<img id='playpause{{sheetMusic.id}}' data-ng-src='music/play.png' data-ng-click='open(sheetMusic.id)'></img>" +
+		                                "<audio id='aud{{sheetMusic.id}}' class='media-object'>" +
+		                                    "<source data-ng-src='{{sheetMusic.music.src}}' type='audio/mp3' />" +
+		                                "</audio>" +
+		                                "<span style='margin-left: 30px;'>{{sheetMusic.music.name}}</span>" +
+		                            "</span>" +
+		                            "<span style='margin-left: 150px;'>{{sheetMusic.music.singer}}</span>" +
+		                            "<span style='margin-left: 150px;'>{{sheetMusic.music.time}}</span>" +
+		                        "</li>" +
+		                    "</div>" +
+	                    "</div>" +
+                    "</div>" +
+                "</div>" +
+                "<pagenation page='{{pageCount}}'></pagenation>",
+            controller: ['$scope', '$state', '$stateParams', 'loadSheetMusic', 'loadDataService', function($scope, $state, $stateParams, loadSheetMusic, loadDataService) {
+                $scope.sheetMusics = loadSheetMusic[0];
+                $scope.pageCount = loadSheetMusic[1].pageCount;
+                $scope.currentPage = loadSheetMusic[1].currentPage;
+                $scope.pageSize = loadSheetMusic[1].pageSize;
+
+                $scope.selectPage = function(page) {
+                    page.sheetId = $stateParams.id;
+                    loadDataService.getData("music/loadSheetMusic", page).then(function(response) {
+                        $scope.sheetMusics = response[0];
+                        $scope.pageCount = response[1].pageCount;
+                        $scope.currentPage = response[1].currentPage;
+                        $scope.pageSize = response[1].pageSize;
+                    }, function(response) {
+                        console.info(resoponse.data)
+                    });
+                }
+                $scope.open = function(id) {
+                    var aud = document.getElementById("aud"+id);
+                    var img = document.getElementById("playpause"+id);
+                        if (aud.paused) {
+                            aud.play();
+                        } else {
+                            aud.pause();
+                        }
+                    aud.addEventListener("play", function (e) {
+                        img.src="music/pause.png";
+                    }, false);
+                    aud.addEventListener("pause", function (e) {
+                        img.src="music/play.png";
+                    }, false);
+                };
+            }],
+            resolve: {
+                loadSheetMusic : ['$stateParams', "loadDataService", "pageSize", function($stateParams, loadDataService, pageSize) {
+                    var page = {
+                        currentPage: 1,
+                        pageSize: pageSize,
+                        sheetId: $stateParams.id
+                    }
+                    return loadDataService.getData("music/loadSheetMusic", page).then(function(result) {
+                        return result;
+                    });
+                }]
+            }
+        };
 
     
     var newSheetState = {

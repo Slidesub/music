@@ -105,7 +105,7 @@ public class MusicController {
              @RequestParam(name = "sheetId", defaultValue = "0") String sheetId) {
         List<SheetMusic> sheetMusics = sheetMusicService.listSheetMusicBySheet(currentPage <= 0 ? 1 : currentPage, pageSize, Integer.parseInt(sheetId));
         int pageCount = 0;
-        int count = sheetService.getCountByUser(Integer.parseInt(sheetId));
+        int count = sheetMusicService.getCountBySheet(Integer.parseInt(sheetId));
         if (count % pageSize == 0) {
             pageCount = count / pageSize;
         } else {
